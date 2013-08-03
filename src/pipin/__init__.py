@@ -19,6 +19,7 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            '(?P<uri>[^#&]+)#egg=(?P<name>[^&]+)$',
                            re.MULTILINE)
 
+
 def is_uri(uri):
     match = re.match(uri_regex, uri.lower())
     return match is not None
@@ -29,24 +30,30 @@ def is_vcs_uri(uri):
     return match is not None
 
 
-def parse(s):
-    if not isinstance(s, basestring):
-        s = s.read()
-
-    exclude_lines = (
+def exclude_line(line):
+    lines = (
         '#', '-r', '--requirement',
         '-f', '--find-links',
         '-i', '--index-url', '--extra-index-url', '--no-index',
         '-Z', '--always-unzip')
+
+    for x in lines:
+        if line.startswith(x):
+            return True
+    return False
+
+
+def parse(s):
+    if not isinstance(s, basestring):
+        s = s.read()
 
     for line in s.splitlines():
         line = line.strip()
         if not line:
             continue
 
-        for x in exclude_lines:
-            if line.startswith(x):
-                continue
+        if exclude_line(line):
+            continue
 
         if line.startswith('file:'):
             match = re.match(file_uri_regex, line)
