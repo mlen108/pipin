@@ -1,3 +1,4 @@
+import argparse
 import os
 import re
 from pkg_resources import Requirement
@@ -18,6 +19,15 @@ editable_uri_regex = re.compile(r'^((?P<vcs>svn|git|bzr|hg)\+)?'
 vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            '(?P<uri>[^#&]+)#egg=(?P<name>[^&]+)$',
                            re.MULTILINE)
+
+parser = argparse.ArgumentParser(version="Pipin {0}".format('0.1'))
+parser.add_argument("path", action="store",
+    help="a directory to search in (use `.` for current directory).")
+parser.add_argument("apps", nargs="+",
+    help="the apps you wish to look up for.")
+parser.add_argument("-f", "--file", action="store",
+    help="name of requirements file (default to `requirements.txt`).")
+args = parser.parse_args()
 
 
 def is_uri(uri):
@@ -79,14 +89,15 @@ def parse(s):
             raise ValueError('Invalid requirement line "%s"' % line)
 
 
-def _locate(filename, root=os.curdir):
+def _locate(root, filename):
+    filename = filename or 'requirements.txt'
     for path, dirs, files in os.walk(os.path.abspath(root)):
         if filename in files:
             yield os.path.join(path, filename)
 
 
 def main():
-    for x in _locate('requirements.txt'):
+    for x in _locate(root=args.path, filename=args.file):
         with open(x, 'r') as f:
             for t in parse(f):
                 print t.key, t.specs
