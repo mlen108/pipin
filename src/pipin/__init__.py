@@ -63,6 +63,7 @@ def parse(s):
 
         if line.startswith('file:'):
             match = re.match(file_uri_regex, line)
+        # TODO: shall it check for editable apps?
         elif line.startswith('-e') or line.startswith('--editable') or \
                 is_uri(line) or is_vcs_uri(line):
             if line.startswith('-e'):
@@ -92,8 +93,9 @@ def _locate(root, filename):
 
 
 def pr(text, path, color):
+    # TODO: path as header
     text = text + " in {0}".format(path)
-    sys.stdout.write("\x1b[1;%dm" % (30+color) + text + "\x1b[0m\n")
+    sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
 def main():
@@ -101,6 +103,9 @@ def main():
     for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
+            # for x in items:
+            #     print x.key, x.specs
+            # 1/0
             # TODO: reduce iterations
             keys = map(lambda x: x.key, items)
             for app in args.apps:
