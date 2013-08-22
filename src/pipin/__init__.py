@@ -108,10 +108,13 @@ def main():
     for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
+            # TODO: reduce iterations
             keys = map(lambda x: x.key, items)
             for app in args.apps:
+                # TODO: quicker way of obtaining current dir
                 p = filename if path == os.getcwd() else fpath
                 if app in keys:
+                    # TODO: if version(s) provided then compare it
                     pr("{0} found".format(app), p, BLUE)
                 else:
                     pr("{0} not found".format(app), p, RED)
