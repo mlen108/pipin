@@ -43,29 +43,22 @@ def is_vcs_uri(uri):
     return match is not None
 
 
-def exclude_line(line):
-    lines = (
+def parse(s):
+    if not isinstance(s, basestring):
+        s = s.read()
+
+    excludes = (
         '#', '-r', '--requirement',
         '-f', '--find-links',
         '-i', '--index-url', '--extra-index-url', '--no-index',
         '-Z', '--always-unzip')
-
-    for x in lines:
-        if line.startswith(x):
-            return True
-    return False
-
-
-def parse(s):
-    if not isinstance(s, basestring):
-        s = s.read()
 
     for line in s.splitlines():
         line = line.strip()
         if not line:
             continue
 
-        if exclude_line(line):
+        if filter(lambda x: line.startswith(x), excludes):
             continue
 
         if line.startswith('file:'):
