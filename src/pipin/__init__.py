@@ -10,6 +10,8 @@ except NameError:
     # Python 3
     basestring = unicode = str
 
+BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
+
 # todo: add ssh, sftp protocols
 uri_regex = re.compile(r'^(svn|git|bzr|hg|http|https|file|ftp):(\.+)')
 file_uri_regex = re.compile(
@@ -96,6 +98,11 @@ def _locate(root, filename):
             yield path, os.path.join(path, filename)
 
 
+def pr(text, path, color):
+    text = text + " in {0}".format(path)
+    sys.stdout.write("\x1b[1;%dm" % (30+color) + text + "\x1b[0m\n")
+
+
 def main():
     filename = args.file or 'requirements.txt'
     for path, fpath in _locate(root=args.path, filename=filename):
@@ -103,8 +110,11 @@ def main():
             items = parse(fopen)
             keys = map(lambda x: x.key, items)
             for app in args.apps:
+                p = filename if path == os.getcwd() else fpath
                 if app in keys:
-                    sys.stdout.write("{0} found in {1}\n".format(app, filename if path == os.getcwd() else fpath))
+                    pr("{0} found".format(app), p, BLUE)
+                else:
+                    pr("{0} not found".format(app), p, RED)
 
 if __name__ == '__main__':
     main()
