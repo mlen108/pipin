@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import sys
 from pkg_resources import Requirement
 
 try:
@@ -90,17 +91,20 @@ def parse(s):
 
 
 def _locate(root, filename):
-    filename = filename or 'requirements.txt'
     for path, dirs, files in os.walk(os.path.abspath(root)):
         if filename in files:
             yield os.path.join(path, filename)
 
 
 def main():
-    for x in _locate(root=args.path, filename=args.file):
-        with open(x, 'r') as f:
-            for t in parse(f):
-                print t.key, t.specs
+    filename = args.file or 'requirements.txt'
+    for fpath in _locate(root=args.path, filename=filename):
+        with open(fpath, 'r') as fopen:
+            items = parse(fopen)
+            keys = map(lambda x: x.key, items)
+            for app in args.apps:
+                if app in keys:
+                    sys.stdout.write("{0} found in {1}.\n".format(app, filename))
 
 if __name__ == '__main__':
     main()
