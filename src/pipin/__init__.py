@@ -93,18 +93,18 @@ def parse(s):
 def _locate(root, filename):
     for path, dirs, files in os.walk(os.path.abspath(root)):
         if filename in files:
-            yield os.path.join(path, filename)
+            yield path, os.path.join(path, filename)
 
 
 def main():
     filename = args.file or 'requirements.txt'
-    for fpath in _locate(root=args.path, filename=filename):
+    for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
             keys = map(lambda x: x.key, items)
             for app in args.apps:
                 if app in keys:
-                    sys.stdout.write("{0} found in {1}.\n".format(app, filename))
+                    sys.stdout.write("{0} found in {1}\n".format(app, filename if path == os.getcwd() else fpath))
 
 if __name__ == '__main__':
     main()
