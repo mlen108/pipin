@@ -93,8 +93,6 @@ def _locate(root, filename):
 
 
 def pr(text, path, color):
-    # TODO: path as header
-    text = text + " in {0}".format(path)
     sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
@@ -103,19 +101,17 @@ def main():
     for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
-            # for x in items:
-            #     print x.key, x.specs
-            # 1/0
+            # TODO: quicker way of obtaining current dir
+            p = filename if path == os.getcwd() else fpath
             # TODO: reduce iterations
             keys = map(lambda x: x.key, items)
+            pr(p.split('/')[-2].upper() + ' (' + p + ')', p, GREEN)
             for app in args.apps:
-                # TODO: quicker way of obtaining current dir
-                p = filename if path == os.getcwd() else fpath
                 if app in keys:
                     # TODO: if version(s) provided then compare it
-                    pr("{0} found".format(app), p, BLUE)
+                    pr("%s found" % app, p, BLUE)
                 else:
-                    pr("{0} not found".format(app), p, RED)
+                    pr("%s not found" % app, p, RED)
 
 if __name__ == '__main__':
     main()
