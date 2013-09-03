@@ -75,7 +75,8 @@ def parse(s):
             match = re.match(editable_uri_regex, tmpstr)
         else:
             try:
-                yield Requirement.parse(line)
+                yield line
+                # yield Requirement.parse(line)
                 continue
             except ValueError:
                 match = None
@@ -101,12 +102,11 @@ def main():
     for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
-            # TODO: reduce iterations
-            keys = map(lambda x: x.key, items)
+            items = ''.join(items)
             pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', GREEN)
             for app in args.apps:
-                if app in keys:
-                    # TODO: if version(s) provided then compare it
+                # TODO: regex for versions comparison (or perhaps use pip's __contains__)
+                if app in items:
                     pr("%s found" % app, BLUE)
                 else:
                     pr("%s not found" % app, RED)
