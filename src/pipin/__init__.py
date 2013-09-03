@@ -24,10 +24,10 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            re.MULTILINE)
 
 parser = argparse.ArgumentParser(version="Pipin {0}".format('0.1'))
-parser.add_argument("path", action="store",
-    help="a directory to search in (use `.` for current directory).")
 parser.add_argument("apps", nargs="+",
     help="the apps you wish to look up for.")
+parser.add_argument("path", action="store",
+    help="a directory to search in (use `.` for current directory).")
 parser.add_argument("-f", "--file", action="store",
     help="name of requirements file (default to `requirements.txt`).")
 args = parser.parse_args()
@@ -103,7 +103,7 @@ def main():
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
             items = ''.join(items)
-            pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', GREEN)
+            pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', MAGENTA)
             for app in args.apps:
                 # TODO: regex for versions comparison (or perhaps use pip's __contains__)
                 if app in items:
