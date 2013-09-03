@@ -93,8 +93,8 @@ def _locate(root, filename):
             yield path, os.path.join(path, filename)
 
 
-def pr(text, color):
-    sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
+def pr(text, color, prefix=''):
+    sys.stdout.write(prefix + "\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
 def main():
@@ -103,13 +103,13 @@ def main():
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
             items = ''.join(items)
-            pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', MAGENTA)
+            pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
             for app in args.apps:
                 # TODO: regex for versions comparison (or perhaps use pip's __contains__)
                 if app in items:
-                    pr("%s found" % app, BLUE)
+                    pr("%s found" % app, CYAN, '- ')
                 else:
-                    pr("%s not found" % app, RED)
+                    pr("%s not found" % app, RED, '- ')
 
 if __name__ == '__main__':
     main()
