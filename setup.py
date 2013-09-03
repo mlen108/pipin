@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pipin',
-    version='0.1.0',
+    version='0.0.1',
     description='',
     author='Matt Lenc',
     author_email='matt.lenc@gmail.com',
