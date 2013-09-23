@@ -82,7 +82,7 @@ def parse(s):
                 match = None
 
         if match:
-            yield match.groupdict()
+            yield match.groupdict()['name']
         else:
             raise ValueError('Invalid requirement line "%s"' % line)
 
@@ -105,7 +105,6 @@ def main():
             items = ''.join(items)
             pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
             for app in args.apps:
-                # TODO: regex for versions comparison (or perhaps use pip's __contains__)
                 if app in items:
                     pr("%s found" % app, CYAN, '- ')
                 else:
