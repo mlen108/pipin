@@ -9,7 +9,6 @@ setup(
     url='http://github.com/mattack108/pipin',
     license='LICENSE.txt',
     packages=['pipin'],
-    package_dir={'': 'src'},
     entry_points={
         'console_scripts': [
             'pipin = pipin:main',
