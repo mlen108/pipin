@@ -2,7 +2,6 @@ import argparse
 import os
 import re
 import sys
-from pkg_resources import Requirement
 
 try:
     unicode
@@ -76,7 +75,6 @@ def parse(s):
         else:
             try:
                 yield line
-                # yield Requirement.parse(line)
                 continue
             except ValueError:
                 match = None
