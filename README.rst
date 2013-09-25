@@ -7,12 +7,19 @@ pipin is a little Python script to search for a given app within your dependenci
 It simply searches in your project's requirements file (yes, it leaves the 'pip freeze' alone).
 You could probably handle same needs with ack or grep, but pipin is less characters to write, colorizes the output nicely etc.
 
+.. image:: https://travis-ci.org/mattack108/pipin.png?branch=master
+   :target: https://travis-ci.org/mattack108/pipin
+
+.. image:: https://pypip.in/v/pipin/badge.png
+   :target: https://pypi.python.org/pypi/pipin
+
+.. image:: https://pypip.in/d/pipin/badge.png
+   :target: https://pypi.python.org/pypi/pipin
+
 Requirements
 ------------
 
-- Python 2.6.x, 2.7.x
-
-Python 3.x will be supported soon!
+- Python 2.6 - 3.3
 
 Installation
 ------------
