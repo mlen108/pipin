@@ -91,8 +91,8 @@ def _locate(root, filename):
             yield path, os.path.join(path, filename)
 
 
-def pr(text, color, prefix=''):
-    sys.stdout.write(prefix + "\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
+def pr(text, color):
+    sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
 def lets_pipin():
@@ -104,9 +104,9 @@ def lets_pipin():
             pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
             for app in args.apps:
                 if app in items:
-                    pr("%s found" % app, CYAN, '- ')
+                    pr("%s found" % app, CYAN)
                 else:
-                    pr("%s not found" % app, RED, '- ')
+                    pr("%s not found" % app, RED)
 
 if __name__ == '__main__':
     lets_pipin()
