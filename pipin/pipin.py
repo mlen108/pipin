@@ -22,7 +22,7 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            '(?P<uri>[^#&]+)#egg=(?P<name>[^&]+)$',
                            re.MULTILINE)
 
-parser = argparse.ArgumentParser(version="Pipin {0}".format('0.1'))
+parser = argparse.ArgumentParser()
 parser.add_argument("apps", nargs="+",
     help="the apps you wish to look up for.")
 parser.add_argument("path", action="store",
@@ -57,7 +57,7 @@ def parse(s):
         if not line:
             continue
 
-        if filter(lambda x: line.startswith(x), excludes):
+        if [x for x in excludes if line.startswith(x)]:
             continue
 
         if line.startswith('file:'):
