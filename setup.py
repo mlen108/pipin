@@ -5,7 +5,7 @@ from setuptools.command.test import test as TestCommand
 import pipin
 
 install_requires = []
-if sys.version_info[:2] < (2, 6):
+if sys.version_info[:2] < (2, 7):
     install_requires.append('argparse')
 
 
