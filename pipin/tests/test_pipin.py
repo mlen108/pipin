@@ -18,8 +18,8 @@ def pr(text, color):
 
 
 def check_output(cmd):
-    s = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
-    return s.decode('UTF-8')
+    return subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        universal_newlines=True).communicate()[0]
 
 
 class TestPipin(object):
