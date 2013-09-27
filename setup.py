@@ -25,6 +25,7 @@ setup(
     url='http://github.com/mattack108/pipin',
     license='LICENSE.txt',
     packages=['pipin'],
+    install_requires=['argparse'],
     tests_require=['pytest'],
     cmdclass={'test': PyTest},
     test_suite='pipin.tests.test_pipin',
