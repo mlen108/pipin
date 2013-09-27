@@ -17,6 +17,11 @@ def pr(text, color):
     return "\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n"
 
 
+def check_output(cmd):
+    s = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+    return s.decode(encoding='UTF-8')
+
+
 class TestPipin(object):
     def print_header_for(self, req_file):
         project = here.split('/')[-1].upper()
@@ -29,24 +34,21 @@ class TestPipinCommands(TestPipin):
         self.hdr = self.print_header_for("requirements.txt")
 
     def test_cmd_valid(self):
-        output = subprocess.check_output(["pipin", "Django==1.4.2", "."])
-        output = output.decode(encoding='UTF-8')
+        output = check_output(["pipin", "Django==1.4.2", "."])
 
         expected_output = self.hdr + pr("Django==1.4.2 found", CYAN)
 
         assert output == expected_output
 
     def test_cmd_invalid(self):
-        output = subprocess.check_output(["pipin", "Flask", "."])
-        output = output.decode(encoding='UTF-8')
+        output = check_output(["pipin", "Flask", "."])
 
         expected_output = self.hdr + pr("Flask not found", RED)
 
         assert output == expected_output
 
     def test_multiple_cmd(self):
-        output = subprocess.check_output(["pipin", "Flask", "Django", "."])
-        output = output.decode(encoding='UTF-8')
+        output = check_output(["pipin", "Flask", "Django", "."])
 
         expected_output = self.hdr + pr("Flask not found", RED)
         expected_output += pr("Django found", CYAN)
@@ -59,9 +61,8 @@ class TestPipinCustomCommands(TestPipin):
         self.hdr = self.print_header_for("dev_requirements.txt")
 
     def test_custom_requirements_file(self):
-        output = subprocess.check_output(["pipin", "nose", ".", "-f",
+        output = check_output(["pipin", "nose", ".", "-f",
             "dev_requirements.txt"])
-        output = output.decode(encoding='UTF-8')
 
         expected_output = self.hdr + pr("nose found", CYAN)
 
