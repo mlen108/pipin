@@ -19,7 +19,7 @@ You could probably handle same needs with ack or grep, but pipin is less charact
 Requirements
 ------------
 
-- Python 2.6, 2.7 or 3.3
+- Python 2.6, 2.7, 3.2 or 3.3
 - `argparse <https://pypi.python.org/pypi/argparse>`_ if py2.6
 
 Installation
