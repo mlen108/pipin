@@ -4,6 +4,10 @@ from setuptools.command.test import test as TestCommand
 
 import pipin
 
+install_requires = []
+if sys.version_info[:2] < (2, 6):
+    install_requires.append('argparse')
+
 
 class PyTest(TestCommand):
     def finalize_options(self):
@@ -25,7 +29,7 @@ setup(
     url='http://github.com/mattack108/pipin',
     license='LICENSE.txt',
     packages=['pipin'],
-    install_requires=['argparse'],
+    install_requires=install_requires,
     tests_require=['pytest'],
     cmdclass={'test': PyTest},
     test_suite='pipin.tests.test_pipin',
