@@ -47,8 +47,3 @@ Different requirements file? Not a problem! ::
 You might also need to search for multiple apps at once. Then do: ::
 
     pipin Django==1.4.2 South .
-
-
-This is pretty beta, so means it is probably broken. If so, please report any bugs
-as issues or PRs.
-
