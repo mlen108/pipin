@@ -23,8 +23,8 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            re.MULTILINE)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("apps", nargs="+",
-    help="the apps you wish to look up for.")
+parser.add_argument("app", nargs="+",
+    help="the app(s) you wish to look up for.")
 parser.add_argument("path", action="store",
     help="a directory to search in (use `.` for current directory).")
 parser.add_argument("-f", "--file", action="store",
@@ -102,7 +102,7 @@ def lets_pipin():
             items = parse(fopen)
             items = ''.join(items)
             pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
-            for app in args.apps:
+            for app in args.app:
                 if app in items:
                     pr("%s found" % app, CYAN)
                 else:
