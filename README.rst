@@ -47,3 +47,10 @@ Different requirements file? Not a problem! ::
 You might also need to search for multiple apps at once. Then do: ::
 
     pipin Django==1.4.2 South .
+
+Also, regular expression is supported: ::
+
+    pipin Django*1.4 .
+
+This will find occurences of ``Django==1.4`` and ``Django>=1.4`` as they are
+both valid.
