@@ -47,6 +47,20 @@ class TestPipinCommands(TestPipin):
 
         assert output == expected_output
 
+    def test_regex_valid(self):
+        output = check_output(["pipin", "South*=0.7", "."])
+
+        expected_output = self.hdr + pr("South>=0.7 found", CYAN)
+
+        assert output == expected_output
+
+    def test_regex_invalid(self):
+        output = check_output(["pipin", "South*0.8", "."])
+
+        expected_output = self.hdr + pr("South*0.8 not found", RED)
+
+        assert output == expected_output
+
     def test_multiple_cmd(self):
         output = check_output(["pipin", "Flask", "Django", "."])
 
