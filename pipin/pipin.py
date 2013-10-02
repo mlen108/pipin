@@ -91,7 +91,7 @@ def _locate(root, filename):
             yield path, os.path.join(path, filename)
 
 
-def pr(text, color):
+def _out(text, color):
     sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
@@ -100,13 +100,21 @@ def lets_pipin():
     for path, fpath in _locate(root=args.path, filename=filename):
         with open(fpath, 'r') as fopen:
             items = parse(fopen)
-            items = ''.join(items)
-            pr(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
+            items = ' '.join(items)
+            _out(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
+
+            reapp = None
             for app in args.app:
-                if app in items:
-                    pr("%s found" % app, CYAN)
+                if '*' in app:
+                    reapp = re.search('%s(.+)%s' % tuple(app.split('*')), items)
+                    reapp = reapp.group() if reapp else None
+
+                if reapp:
+                    _out("%s found" % reapp, CYAN)
+                elif app in items:
+                    _out("%s found" % app, CYAN)
                 else:
-                    pr("%s not found" % app, RED)
+                    _out("%s not found" % app, RED)
 
 if __name__ == '__main__':
     lets_pipin()
