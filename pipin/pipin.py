@@ -67,6 +67,9 @@ def parse(s):
                 is_uri(line) or is_vcs_uri(line):
             if line.startswith('-e'):
                 tmpstr = line[len('-e'):].strip()
+                # too short requirement format
+                if len(tmpstr) < 5:
+                    continue
             elif line.startswith('--editable'):
                 tmpstr = line[len('--editable'):].strip()
             else:
