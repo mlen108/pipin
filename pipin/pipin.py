@@ -1,4 +1,5 @@
 import argparse
+from collections import Counter
 import os
 import re
 import sys
@@ -99,11 +100,14 @@ def _out(text, color):
 
 
 def lets_pipin():
+    cnt = Counter()
+    cnt_projects = 0
     filename = args.file or 'requirements.txt'
+
     for path, fpath in _locate(root=args.path, filename=filename):
+        cnt_projects += 1
         with open(fpath, 'r') as fopen:
-            items = parse(fopen)
-            items = ' '.join(items)
+            items = ' '.join(parse(fopen))
             _out(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
 
             reapp = None
@@ -114,10 +118,18 @@ def lets_pipin():
 
                 if reapp:
                     _out("%s found" % reapp, CYAN)
+                    cnt.update(['%s_found' % app])
                 elif app in items:
                     _out("%s found" % app, CYAN)
+                    cnt.update(['%s_found' % app])
                 else:
                     _out("%s not found" % app, RED)
+                    cnt.update(['%s_not_found' % app])
+
+    for app in args.app:
+        _out("\nSearched %s projects for %s:" % (cnt_projects, app), WHITE)
+        _out(" %s found" % cnt['%s_found' % app], CYAN)
+        _out(" %s not found" % cnt['%s_not_found' % app], RED)
 
 if __name__ == '__main__':
     lets_pipin()
