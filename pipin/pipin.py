@@ -113,7 +113,7 @@ def lets_pipin():
             reapp = None
             for app in args.app:
                 if '*' in app:
-                    reapp = re.search('%s(.+)%s' % tuple(app.split('*')), items)
+                    reapp = re.search(r'\b%s\b([\>\=\<]+)%s' % tuple(app.split('*')), items)
                     reapp = reapp.group() if reapp else None
 
                 if reapp:
