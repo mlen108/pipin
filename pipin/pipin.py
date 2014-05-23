@@ -1,5 +1,5 @@
 import argparse
-from collections import Counter
+from collections import defaultdict
 import os
 import re
 import sys
@@ -100,7 +100,7 @@ def _out(text, color):
 
 
 def lets_pipin():
-    cnt = Counter()
+    cnt = defaultdict(int)
     cnt_projects = 0
     filename = args.file or 'requirements.txt'
 
@@ -118,13 +118,13 @@ def lets_pipin():
 
                 if reapp:
                     _out("%s found" % reapp, CYAN)
-                    cnt.update(['%s_found' % app])
+                    cnt['%s_found' % app] += 1
                 elif app in items:
                     _out("%s found" % app, CYAN)
-                    cnt.update(['%s_found' % app])
+                    cnt['%s_found' % app] += 1
                 else:
                     _out("%s not found" % app, RED)
-                    cnt.update(['%s_not_found' % app])
+                    cnt['%s_not_found' % app] += 1
 
     for app in args.app:
         _out("\nSearched %s projects for %s:" % (cnt_projects, app), WHITE)
