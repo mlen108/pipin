@@ -18,8 +18,8 @@ def pr(text, color):
 
 
 def check_output(cmd):
-    return subprocess.Popen(cmd, stdout=subprocess.PIPE,
-        universal_newlines=True).communicate()[0]
+    return subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
 
 
 class TestPipin(object):
@@ -75,8 +75,9 @@ class TestPipinCustomCommands(TestPipin):
         self.hdr = self.print_header_for("dev_requirements.txt")
 
     def test_custom_requirements_file(self):
-        output = check_output(["pipin", "nose", ".", "-f",
-            "dev_requirements.txt"])
+        output = check_output([
+            "pipin", "nose", ".", "-f", "dev_requirements.txt"
+        ])
 
         expected_output = self.hdr + pr("nose found", CYAN)
 
