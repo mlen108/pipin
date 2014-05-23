@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 setup(
     name='pipin',
     version=pipin.__version__,
-    description='',
+    description='pipin is a little script to search for dependencies within your app',
     author='Matt Lenc',
     author_email='matt.lenc@gmail.com',
     url='http://github.com/mattack108/pipin',
