@@ -28,6 +28,12 @@ class TestPipin(object):
         req_file = "%s/%s" % (here, req_file)
         return pr("%s (%s)" % (project, req_file), YELLOW)
 
+    def print_summary(self, text, found=0, not_found=0):
+        s = pr("\nSearched 1 projects for %s:" % (text), WHITE)
+        s += pr(" %s found" % found, CYAN)
+        s += pr(" %s not found" % not_found, RED)
+        return s
+
 
 class TestPipinCommands(TestPipin):
     def setup(self):
@@ -37,6 +43,7 @@ class TestPipinCommands(TestPipin):
         output = check_output(["pipin", "Django==1.4.2", "."])
 
         expected_output = self.hdr + pr("Django==1.4.2 found", CYAN)
+        expected_output += self.print_summary(text='Django==1.4.2', found=1)
 
         assert output == expected_output
 
@@ -44,6 +51,7 @@ class TestPipinCommands(TestPipin):
         output = check_output(["pipin", "Flask", "."])
 
         expected_output = self.hdr + pr("Flask not found", RED)
+        expected_output += self.print_summary(text='Flask', not_found=1)
 
         assert output == expected_output
 
@@ -51,13 +59,15 @@ class TestPipinCommands(TestPipin):
         output = check_output(["pipin", "South*=0.7", "."])
 
         expected_output = self.hdr + pr("South>=0.7 found", CYAN)
+        expected_output += self.print_summary(text='South*=0.7', found=1)
 
         assert output == expected_output
 
     def test_regex_invalid(self):
-        output = check_output(["pipin", "South*0.8", "."])
+        output = check_output(["pipin", "Django*1.6", "."])
 
-        expected_output = self.hdr + pr("South*0.8 not found", RED)
+        expected_output = self.hdr + pr("Django*1.6 not found", RED)
+        expected_output += self.print_summary(text='Django*1.6', not_found=1)
 
         assert output == expected_output
 
@@ -66,6 +76,8 @@ class TestPipinCommands(TestPipin):
 
         expected_output = self.hdr + pr("Flask not found", RED)
         expected_output += pr("Django found", CYAN)
+        expected_output += self.print_summary(text='Flask', not_found=1)
+        expected_output += self.print_summary(text='Django', found=1)
 
         assert output == expected_output
 
@@ -80,5 +92,6 @@ class TestPipinCustomCommands(TestPipin):
         ])
 
         expected_output = self.hdr + pr("nose found", CYAN)
+        expected_output += self.print_summary(text='nose', found=1)
 
         assert output == expected_output
