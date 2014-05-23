@@ -48,7 +48,7 @@ You might also need to search for multiple apps at once. Then do: ::
 
     pipin Django==1.4.2 South .
 
-Also, regular expression is supported: ::
+Also, literal asterisk (*) is supported: ::
 
     pipin Django*1.4 .
 
