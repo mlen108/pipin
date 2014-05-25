@@ -25,11 +25,11 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("app", nargs="+",
-    help="the app(s) you wish to look up for.")
+                    help="the app(s) you wish to look up for.")
 parser.add_argument("path", action="store",
-    help="a directory to search in (use `.` for current directory).")
+                    help="a directory to search in (use `.` for current directory).")
 parser.add_argument("-f", "--file", action="store",
-    help="name of requirements file (default to `requirements.txt`).")
+                    help="name of requirements file (default to `requirements.txt`).")
 args = parser.parse_args()
 
 
@@ -113,7 +113,8 @@ def lets_pipin():
             reapp = None
             for app in args.app:
                 if '*' in app:
-                    reapp = re.search(r'\b%s\b([\>\=\<]+)%s' % tuple(app.split('*')), items)
+                    reapp = re.search(r'\b%s\b([\>\=\<]+)%s'
+                                      % tuple(app.split('*')), items)
                     reapp = reapp.group() if reapp else None
 
                 if reapp:
