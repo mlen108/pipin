@@ -23,15 +23,6 @@ vcs_uri_regex = re.compile(r'^(?P<vcs>svn|git|bzr|hg)\+'
                            '(?P<uri>[^#&]+)#egg=(?P<name>[^&]+)$',
                            re.MULTILINE)
 
-parser = argparse.ArgumentParser()
-parser.add_argument("app", nargs="+",
-    help="the app(s) you wish to look up for.")
-parser.add_argument("path", action="store",
-    help="a directory to search in (use `.` for current directory).")
-parser.add_argument("-f", "--file", action="store",
-    help="name of requirements file (default to `requirements.txt`).")
-args = parser.parse_args()
-
 
 def is_uri(uri):
     match = re.match(uri_regex, uri.lower())
@@ -99,21 +90,22 @@ def _out(text, color):
     sys.stdout.write("\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n")
 
 
-def lets_pipin():
+def lets_pipin(_apps, _path, _file=None):
     cnt = defaultdict(int)
     cnt_projects = 0
-    filename = args.file or 'requirements.txt'
+    filename = _file or 'requirements.txt'
 
-    for path, fpath in _locate(root=args.path, filename=filename):
+    for path, fpath in _locate(root=_path, filename=filename):
         cnt_projects += 1
         with open(fpath, 'r') as fopen:
             items = ' '.join(parse(fopen))
             _out(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
 
             reapp = None
-            for app in args.app:
+            for app in _apps:
                 if '*' in app:
-                    reapp = re.search(r'\b%s\b([\>\=\<]+)%s' % tuple(app.split('*')), items)
+                    reapp = re.search(
+                        r'\b%s\b([\>\=\<]+)%s' % tuple(app.split('*')), items)
                     reapp = reapp.group() if reapp else None
 
                 if reapp:
@@ -126,10 +118,30 @@ def lets_pipin():
                     _out("%s not found" % app, RED)
                     cnt['%s_not_found' % app] += 1
 
-    for app in args.app:
+    for app in _apps:
         _out("\nSearched %s projects for %s:" % (cnt_projects, app), WHITE)
         _out(" %s found" % cnt['%s_found' % app], CYAN)
         _out(" %s not found" % cnt['%s_not_found' % app], RED)
 
+
+def run():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "app",
+        nargs="+",
+        help="the app(s) you wish to search for.")
+    parser.add_argument(
+        "path",
+        action="store",
+        help="a directory to search in (use `.` for current directory).")
+    parser.add_argument(
+        "-f", "--file",
+        action="store",
+        help="name of the requirements file (default to `requirements.txt`).")
+    args = parser.parse_args()
+
+    lets_pipin(args.app, args.path, args.file)
+
+
 if __name__ == '__main__':
-    lets_pipin()
+    run()

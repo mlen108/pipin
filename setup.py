@@ -1,8 +1,6 @@
-import sys
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
-
-import pipin
+import sys
 
 install_requires = []
 if sys.version_info[:2] < (2, 7):
@@ -17,42 +15,41 @@ class PyTest(TestCommand):
 
     def run_tests(self):
         import pytest
-        errcode = pytest.main(self.test_args)
-        sys.exit(errcode)
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
+
 
 setup(
     name='pipin',
-    version=pipin.__version__,
-    description='''pipin is a little script to search for dependencies within
-        your project(s).''',
+    version='0.2.1',
     author='Maciek Lenc',
     author_email='matt.lenc@gmail.com',
     url='http://github.com/mattack108/pipin',
-    license='LICENSE.txt',
-    packages=['pipin'],
+    license='MIT',
+    description='pipin is a little script to search for dependencies within'
+                'your project(s).',
     install_requires=install_requires,
-    tests_require=['pytest'],
     cmdclass={'test': PyTest},
-    test_suite='pipin.tests.test_pipin',
-    extras_require={
-        'testing': ['pytest'],
-    },
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pipin = pipin.pipin:lets_pipin',
-        ]
+            'pipin = pipin:run',
+        ],
     },
     classifiers=[
-        "Environment :: Console",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
-        "Topic :: Software Development",
-        "Topic :: Utilities",
-    ]
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development',
+        'Topic :: Utilities',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+    ],
+    keywords='pipin pip requirements dependencies',
 )
