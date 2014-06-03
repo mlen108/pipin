@@ -1,4 +1,9 @@
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO
+except:
+    # python 3
+    from io import StringIO
+
 import contextlib
 import os
 import sys
