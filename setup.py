@@ -21,7 +21,7 @@ class PyTest(TestCommand):
 
 setup(
     name='pipin',
-    version='0.2.1',
+    version='0.2.2',
     author='Maciek Lenc',
     author_email='matt.lenc@gmail.com',
     url='http://github.com/mattack108/pipin',
