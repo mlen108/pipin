@@ -3,9 +3,9 @@ pipin
 
 Let's *pipin*!
 
-pipin is a little Python script to search for a given app within your dependencies.
-It simply searches in your project's requirements file (yes, it leaves the 'pip freeze' alone).
-You could probably handle same needs with ack or grep, but pipin is less characters to write, colorizes the output nicely etc.
+pipin is a little Python script to search for a given app(s) within your project's dependencies.
+
+You could probably handle same needs with `ack` or `grep`, but `pipin` is less characters to write, colorizes the output nicely etc.
 
 .. image:: https://travis-ci.org/mattack108/pipin.png?branch=master
    :target: https://travis-ci.org/mattack108/pipin
@@ -34,13 +34,21 @@ Note: you probably want to install it as sudo in order to *pipin everywhere*.
 Usage
 -----
 
+Go to folder where all your projects are stored: ::
+
+    cd /home/projects/
+
 Just tell *what* and *where* you want to pipin: ::
 
     pipin Django==1.4.2 .
 
 This will search for "Django==1.4.2" in requirements.txt file in current directory (because ".").
 
-Different requirements file? Not a problem! ::
+Search within specific project only? Not a problem! ::
+
+    pipin Django==1.4.2 /path/to/project/
+
+Different requirements file? Not a problem too! ::
 
     pipin Django==1.4.2 . -f dev_requirements.txt
 
