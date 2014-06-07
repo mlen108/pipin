@@ -11,6 +11,12 @@ except NameError:
     basestring = unicode = str
 
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
+# dirs to exclude from search
+EXCLUDE_PATHS = [
+    '.git', '.hg', '.egg', 'eggs', 'dist', 'build', 'bin', 'var', 'sdist',
+    'lib', 'lib64', 'sass', '.metadata', '.plugins', '.tox', 'migrations',
+    'projectmigrations', 'static', 'templates', 'templatetags', 'locale',
+    'client_media', 'docs']
 
 # todo: add ssh, sftp protocols
 uri_regex = re.compile(r'^(svn|git|bzr|hg|http|https|file|ftp):(\.+)')
@@ -82,6 +88,8 @@ def parse(s):
 
 def _locate(root, filename):
     for path, dirs, files in os.walk(os.path.abspath(root)):
+        if any(x in path for x in EXCLUDE_PATHS):
+            continue
         if filename in files:
             yield path, os.path.join(path, filename)
 
@@ -141,7 +149,6 @@ def run():
     args = parser.parse_args()
 
     lets_pipin(args.app, args.path, args.file)
-
 
 if __name__ == '__main__':
     run()
