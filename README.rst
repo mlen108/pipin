@@ -5,7 +5,7 @@ Let's *pipin*!
 
 pipin is a little Python script to search for a given app(s) within your project's dependencies.
 
-You could probably handle same needs with `ack` or `grep`, but `pipin` is less characters to write, colorizes the output nicely etc.
+You could probably handle same needs with ``ack`` or ``grep``, but ``pipin`` is less characters to write, colorizes the output nicely etc.
 
 .. image:: https://travis-ci.org/mattack108/pipin.png?branch=master
    :target: https://travis-ci.org/mattack108/pipin
