@@ -53,56 +53,56 @@ class TestPipin(object):
         return s
 
 
-# class TestPipinCommands(TestPipin):
-#     def setup(self):
-#         self.hdr = self.print_header_for("requirements.txt")
+class TestPipinCommands(TestPipin):
+    def setup(self):
+        self.hdr = self.print_header_for("requirements.txt")
 
-#     def test_cmd_valid(self):
-#         with capture() as output:
-#             pipin.lets_pipin(['Django==1.4.2'], '.')
+    def test_cmd_valid(self):
+        with capture() as output:
+            pipin.lets_pipin(['Django==1.4.2'], '.')
 
-#         expected_output = self.hdr + pr("Django==1.4.2 found", CYAN)
-#         expected_output += self.print_summary(text='Django==1.4.2', found=1)
+        expected_output = self.hdr + pr("Django==1.4.2 found", CYAN)
+        expected_output += self.print_summary(text='Django==1.4.2', found=1)
 
-#         assert output.result == expected_output
+        assert output.result == expected_output
 
-#     def test_cmd_invalid(self):
-#         with capture() as output:
-#             pipin.lets_pipin(["Flask"], '.')
+    def test_cmd_invalid(self):
+        with capture() as output:
+            pipin.lets_pipin(["Flask"], '.')
 
-#         expected_output = self.hdr + pr("Flask not found", RED)
-#         expected_output += self.print_summary(text='Flask', not_found=1)
+        expected_output = self.hdr + pr("Flask not found", RED)
+        expected_output += self.print_summary(text='Flask', not_found=1)
 
-#         assert output.result == expected_output
+        assert output.result == expected_output
 
-#     def test_regex_valid(self):
-#         with capture() as output:
-#             pipin.lets_pipin(["South*=0.7"], '.')
+    def test_regex_valid(self):
+        with capture() as output:
+            pipin.lets_pipin(["South*=0.7"], '.')
 
-#         expected_output = self.hdr + pr("South>=0.7 found", CYAN)
-#         expected_output += self.print_summary(text='South*=0.7', found=1)
+        expected_output = self.hdr + pr("South>=0.7 found", CYAN)
+        expected_output += self.print_summary(text='South*=0.7', found=1)
 
-#         assert output.result == expected_output
+        assert output.result == expected_output
 
-#     def test_regex_invalid(self):
-#         with capture() as output:
-#             pipin.lets_pipin(["Django*1.6"], '.')
+    def test_regex_invalid(self):
+        with capture() as output:
+            pipin.lets_pipin(["Django*1.6"], '.')
 
-#         expected_output = self.hdr + pr("Django*1.6 not found", RED)
-#         expected_output += self.print_summary(text='Django*1.6', not_found=1)
+        expected_output = self.hdr + pr("Django*1.6 not found", RED)
+        expected_output += self.print_summary(text='Django*1.6', not_found=1)
 
-#         assert output.result == expected_output
+        assert output.result == expected_output
 
-#     def test_multiple_cmd(self):
-#         with capture() as output:
-#             pipin.lets_pipin(["Flask", "Django"], '.')
+    def test_multiple_cmd(self):
+        with capture() as output:
+            pipin.lets_pipin(["Flask", "Django"], '.')
 
-#         expected_output = self.hdr + pr("Flask not found", RED)
-#         expected_output += pr("Django found", CYAN)
-#         expected_output += self.print_summary(text='Flask', not_found=1)
-#         expected_output += self.print_summary(text='Django', found=1)
+        expected_output = self.hdr + pr("Flask not found", RED)
+        expected_output += pr("Django found", CYAN)
+        expected_output += self.print_summary(text='Flask', not_found=1)
+        expected_output += self.print_summary(text='Django', found=1)
 
-#         assert output.result == expected_output
+        assert output.result == expected_output
 
 
 class TestPipinCustomCommands(TestPipin):

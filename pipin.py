@@ -13,7 +13,7 @@ except NameError:
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
 # dirs to exclude from search
 EXCLUDE_PATHS = [
-    '.git', '.hg', '.egg', 'eggs', 'dist', 'build', 'bin', 'var', 'sdist',
+    '.git', '.hg', '.egg', 'eggs', 'dist', 'bin', 'var', 'sdist',
     'lib', 'lib64', 'sass', '.metadata', '.plugins', '.tox', 'migrations',
     'projectmigrations', 'static', 'templates', 'templatetags', 'locale',
     'client_media', 'docs']
@@ -88,8 +88,8 @@ def parse(s):
 
 def _locate(root, filename):
     for path, dirs, files in os.walk(os.path.abspath(root)):
-        # if any(x in path for x in EXCLUDE_PATHS):
-        #     continue
+        if any(x in path for x in EXCLUDE_PATHS):
+            continue
         if filename in files:
             yield path, os.path.join(path, filename)
 
