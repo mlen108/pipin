@@ -7,7 +7,7 @@ python:
 install:
   - "python setup.py install"
   - "pip install coveralls"
-script: "python setup.py test"
+script: "make test"
 after_success: "coveralls"
 notifications:
   email: false
