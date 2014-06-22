@@ -30,7 +30,7 @@ setup(
                 'your project(s).',
     install_requires=install_requires,
     cmdclass={'test': PyTest},
-    tests_require=['pytest'],
+    tests_require=['coverage', 'pytest'],
     entry_points={
         'console_scripts': [
             'pipin = pipin:run',
