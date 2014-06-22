@@ -87,7 +87,11 @@ def parse(s):
 
 
 def _locate(root, filename):
+    print('here')
+    print(os.path.abspath(root))
     for path, dirs, files in os.walk(os.path.abspath(root)):
+        print('inside')
+        print(path)
         if any(x in path for x in EXCLUDE_PATHS):
             continue
         if filename in files:
