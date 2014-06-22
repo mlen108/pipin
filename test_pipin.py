@@ -42,12 +42,8 @@ def pr(text, color):
 class TestPipin(object):
     def print_header_for(self, req_file):
         here = os.path.join(os.path.dirname(__file__), 'test_project')
-        print('debug here')
-        print(here)
         project = here.split('/')[-1].upper()
         req_file = "%s/%s" % (here, req_file)
-        print(project)
-        print(req_file)
         return pr("%s (%s)" % (project, req_file), YELLOW)
 
     def print_summary(self, text, found=0, not_found=0):
