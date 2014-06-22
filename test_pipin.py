@@ -64,6 +64,10 @@ class TestPipinCommands(TestPipin):
         expected_output = self.hdr + pr("Django==1.4.2 found", CYAN)
         expected_output += self.print_summary(text='Django==1.4.2', found=1)
 
+        print('debug before')
+        print(output.result)
+        print('debug after')
+        print(expected_output)
         assert output.result == expected_output
 
     def test_cmd_invalid(self):
