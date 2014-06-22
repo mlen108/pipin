@@ -39,18 +39,18 @@ def pr(text, color):
     return "\x1b[1;%dm" % (30 + color) + text + "\x1b[0m\n"
 
 
-# class TestPipin(object):
-#     def print_header_for(self, req_file):
-#         here = os.path.join(os.path.dirname(__file__), 'test_project')
-#         project = here.split('/')[-1].upper()
-#         req_file = "%s/%s" % (here, req_file)
-#         return pr("%s (%s)" % (project, req_file), YELLOW)
+class TestPipin(object):
+    def print_header_for(self, req_file):
+        here = os.path.join(os.path.dirname(__file__), 'test_project')
+        project = here.split('/')[-1].upper()
+        req_file = "%s/%s" % (here, req_file)
+        return pr("%s (%s)" % (project, req_file), YELLOW)
 
-#     def print_summary(self, text, found=0, not_found=0):
-#         s = pr("\nSearched 1 projects for %s:" % (text), WHITE)
-#         s += pr(" %s found" % found, CYAN)
-#         s += pr(" %s not found" % not_found, RED)
-#         return s
+    def print_summary(self, text, found=0, not_found=0):
+        s = pr("\nSearched 1 projects for %s:" % (text), WHITE)
+        s += pr(" %s found" % found, CYAN)
+        s += pr(" %s not found" % not_found, RED)
+        return s
 
 
 # class TestPipinCommands(TestPipin):
