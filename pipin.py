@@ -104,8 +104,12 @@ def lets_pipin(_apps, _path, _file=None):
     filename = _file or 'requirements.txt'
 
     for path, fpath in _locate(root=_path, filename=filename):
+        print('before')
+        print(fpath)
         cnt_projects += 1
         with open(fpath, 'r') as fopen:
+            print('after')
+            print(fpath)
             items = ' '.join(parse(fopen))
             _out(fpath.split('/')[-2].upper() + ' (' + fpath + ')', YELLOW)
 
