@@ -6,7 +6,7 @@ import sys
 
 try:
     unicode
-except NameError:
+except NameError:  # pragma: no cover
     # Python 3
     basestring = unicode = str
 
@@ -132,7 +132,7 @@ def lets_pipin(_apps, _path, _file=None):
         _out(" %s not found" % cnt['%s_not_found' % app], RED)
 
 
-def run():
+def run():  # pragma: no cover
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "app",
@@ -150,5 +150,5 @@ def run():
 
     lets_pipin(args.app, args.path, args.file)
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     run()
