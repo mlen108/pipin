@@ -7,7 +7,7 @@ Let's *pipin*!
 
 You could probably handle same needs with ``ack`` or ``grep``, but ``pipin`` is less characters to write, colorizes the output nicely etc.
 
-.. image:: https://pypip.in/version/pipin/badge.png
+.. image:: https://img.shields.io/pypi/v/pipin.svg
   :target: https://pypi.python.org/pypi/pipin/
 
 .. image:: https://travis-ci.org/mattack108/pipin.svg?branch=master
@@ -16,7 +16,7 @@ You could probably handle same needs with ``ack`` or ``grep``, but ``pipin`` is 
 .. image:: https://coveralls.io/repos/mattack108/pipin/badge.png?branch=master
   :target: https://coveralls.io/r/mattack108/pipin?branch=master
 
-.. image:: https://pypip.in/download/pipin/badge.png
+.. image:: https://img.shields.io/pypi/dm/pipin.svg
   :target: https://pypi.python.org/pypi/pipin/
 
 Requirements
